@@ -22,8 +22,8 @@ class Location(models.Model):
 
 class Route(models.Model):
     route_name = models.CharField(max_length=50)
-    start_point= models.OneToOneField("trip-management:Location", verbose_name="start_point", on_delete=models.CASCADE)
-    end_point= models.OneToOneField("trip-management:Location", verbose_name="end_point", on_delete=models.CASCADE)
+    start_point= models.OneToOneField("Location", related_name="start_point", on_delete=models.CASCADE)
+    end_point= models.OneToOneField("Location", related_name="end_point", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     class Meta:
