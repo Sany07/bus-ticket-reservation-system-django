@@ -24,12 +24,9 @@ class Route(models.Model):
     route_name = models.CharField(max_length=50)
     start_point= models.OneToOneField("Location", related_name="start_point", on_delete=models.CASCADE)
     end_point= models.OneToOneField("Location", related_name="end_point", on_delete=models.CASCADE)
-<<<<<<< HEAD
-=======
     # StoppagePoints
     distance = models.FloatField()
     approximate_time =models.FloatField() 
->>>>>>> cb5409d56bcb8665d7ace9f55e768f73a1274496
     is_active = models.BooleanField(default=True)
 
     class Meta:
