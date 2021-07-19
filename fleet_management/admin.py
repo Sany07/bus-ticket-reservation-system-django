@@ -4,5 +4,6 @@ from fleet_management.models import *
 
 
 admin.site.register(FleetType)
+admin.site.register(FleetName)
 admin.site.register(FleetFacility)
 admin.site.register(FleetRegistration)

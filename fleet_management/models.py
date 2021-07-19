@@ -51,10 +51,14 @@ layout_Choices = (
     )
 
 class FleetRegistration(models.Model):
-    model_no = models.CharField(max_length=50)
+    coach_no = models.IntegerField()
+    coach_model = models.CharField(max_length=50)
     layout = models.CharField(max_length=2, choices=layout_Choices)
-    route_name =  models.OneToOneField("FleetType", related_name="fleet_type", on_delete=models.CASCADE)
+    fleet_type =  models.OneToOneField("FleetType", related_name="fleet_type", on_delete=models.CASCADE)
+    fleet_name =  models.OneToOneField("FleetName", related_name="FleetName", on_delete=models.CASCADE)
+    fleet_facility =  models.OneToOneField("FleetFacility", related_name="fleet_facility", on_delete=models.CASCADE)
     total_seat_no = models.IntegerField()
+    seat_number = models.CharField(max_length=400,help_text = "Use comma to separate the input. Ex: A1 , A2 , A3 , A4 . . . ")
     is_last_seat_available = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     

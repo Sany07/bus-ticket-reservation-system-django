@@ -6,7 +6,7 @@ from django.shortcuts import reverse
 # Create your models here.
 class Location(models.Model):
     location_name = models.CharField(max_length=50)    
-    description = models.TextField()
+    description = models.TextField(blank=True,null=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -24,7 +24,7 @@ class Route(models.Model):
     route_name = models.CharField(max_length=50)
     start_point= models.OneToOneField("Location", related_name="start_point", on_delete=models.CASCADE)
     end_point= models.OneToOneField("Location", related_name="end_point", on_delete=models.CASCADE)
-    # StoppagePoints
+    stoppage_points = models.ManyToManyField("Location")
     distance = models.FloatField()
     approximate_time =models.FloatField() 
     is_active = models.BooleanField(default=True)
@@ -52,7 +52,7 @@ class TripAssign(models.Model):
         verbose_name_plural ="TripAssigns"
 
     def __str__(self):
-        return self.route_name
+        return self.route_name.route_name
 
     # def get_absolute_url(self):
     #     return reverse("TripAssign_detail", kwargs={"pk": self.pk})
