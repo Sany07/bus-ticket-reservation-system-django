@@ -1,5 +1,7 @@
 from django.db import models
 
+
+
 class FleetType(models.Model):
     name = models.CharField(max_length=50)
     is_active = models.BooleanField(default=True)
@@ -13,6 +15,20 @@ class FleetType(models.Model):
 
     # def get_absolute_url(self):
     #     return reverse("FleetType_detail", kwargs={"pk": self.pk})
+
+
+class FleetName(models.Model):
+    name = models.CharField(max_length=50)
+    company_name = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "FleetName"
+        verbose_name_plural = "FleetNames"
+
+    def __str__(self):
+        return self.name
+
 
 class FleetFacility(models.Model):
     name = models.CharField(max_length=50)
