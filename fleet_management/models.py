@@ -32,7 +32,7 @@ class FleetName(models.Model):
 
 class FleetFacility(models.Model):
     name = models.CharField(max_length=50)
-    details = models.TextField()
+    details = models.TextField(blank=True,null=True)
     is_active = models.BooleanField(default=True)
     
 
@@ -51,7 +51,7 @@ layout_Choices = (
     )
 
 class FleetRegistration(models.Model):
-    coach_no = models.IntegerField()
+    coach_no = models.CharField(max_length=50)
     coach_model = models.CharField(max_length=50)
     layout = models.CharField(max_length=2, choices=layout_Choices)
     fleet_type =  models.OneToOneField("FleetType", related_name="fleet_type", on_delete=models.CASCADE)
@@ -68,4 +68,4 @@ class FleetRegistration(models.Model):
         verbose_name_plural ="FleetRegistrations"
 
     def __str__(self):
-        return self.model_no
+        return self.coach_no

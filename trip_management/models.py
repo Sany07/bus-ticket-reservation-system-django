@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.fields import TextField
 from django.shortcuts import reverse
 
+from fleet_management.models import FleetRegistration
 
 # Create your models here.
 class Location(models.Model):
@@ -42,6 +43,7 @@ class Route(models.Model):
 
 
 class TripAssign(models.Model):
+    fleet_name =  models.ManyToManyField(FleetRegistration)
     route_name =  models.OneToOneField("Route", related_name="trip_route_name", on_delete=models.CASCADE)
     trip_date = models.DateTimeField(auto_now=False, auto_now_add=False)
     is_active = models.BooleanField(default=True)

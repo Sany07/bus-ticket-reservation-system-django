@@ -2,6 +2,33 @@ from django.contrib import admin
 
 from trip_management.models import *
 
-admin.site.register(Location)
-admin.site.register(Route)
-admin.site.register(TripAssign)
+
+
+@admin.register(Location)
+class TripAssignAdmin(admin.ModelAdmin):
+    list_display = [
+        "location_name",
+        "is_active",
+
+    ]
+    list_filter = ["location_name","is_active",]
+
+@admin.register(Route)
+class TripAssignAdmin(admin.ModelAdmin):
+    list_display = [
+        "route_name",
+        "is_active",
+
+    ]
+    list_filter = ["route_name","start_point","end_point"]
+
+
+@admin.register(TripAssign)
+class TripAssignAdmin(admin.ModelAdmin):
+    list_display = [
+        "route_name",
+        "is_active",
+
+    ]
+    list_filter = ["route_name", "trip_date"]
+    date_hierarchy = "trip_date"
