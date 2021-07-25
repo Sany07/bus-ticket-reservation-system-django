@@ -30,5 +30,8 @@ class TripAssignAdmin(admin.ModelAdmin):
         "is_active",
 
     ]
-    list_filter = ["route_name", "trip_date"]
-    date_hierarchy = "trip_date"
+    list_filter = ["route_name"]
+    # date_hierarchy = "trip_date"
+
+
+admin.site.register(TripDateTime)

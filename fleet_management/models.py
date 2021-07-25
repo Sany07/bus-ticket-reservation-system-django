@@ -7,8 +7,8 @@ class FleetType(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "FleetType"
-        verbose_name_plural = "FleetTypes"
+        verbose_name = "Fleet Type"
+        verbose_name_plural = "Fleet Types"
 
     def __str__(self):
         return self.name
@@ -23,8 +23,8 @@ class FleetName(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "FleetName"
-        verbose_name_plural = "FleetNames"
+        verbose_name = "Fleet Name"
+        verbose_name_plural = "Fleet Names"
 
     def __str__(self):
         return self.name
@@ -37,8 +37,8 @@ class FleetFacility(models.Model):
     
 
     class Meta:
-        verbose_name = "FleetFacility"
-        verbose_name_plural ="FleetFacilities"
+        verbose_name = "Fleet Facility"
+        verbose_name_plural ="Fleet Facilities"
 
     def __str__(self):
         return self.name
@@ -64,8 +64,8 @@ class FleetRegistration(models.Model):
     
 
     class Meta:
-        verbose_name = "FleetRegistration"
-        verbose_name_plural ="FleetRegistrations"
+        verbose_name = "Fleet Registration"
+        verbose_name_plural ="Fleet Registrations"
 
     def __str__(self):
         return self.coach_no

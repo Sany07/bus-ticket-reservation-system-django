@@ -41,17 +41,28 @@ class Route(models.Model):
     #     return reverse("Route_detail", kwargs={"pk": self.pk})
 
 
+class TripDateTime(models.Model):
+    trip_date_time = models.DateTimeField(auto_now=False, auto_now_add=False)
+
+
+    class Meta:
+        verbose_name = "Trip Date Time"
+        verbose_name_plural ="Trip Date Times"
+
+    def __str__(self):
+        return str(self.trip_date_time)
+
 
 class TripAssign(models.Model):
     fleet_name =  models.ManyToManyField(FleetRegistration)
     route_name =  models.OneToOneField("Route", related_name="trip_route_name", on_delete=models.CASCADE)
-    trip_date = models.DateTimeField(auto_now=False, auto_now_add=False)
+    trip_date_time = models.ManyToManyField(TripDateTime)
     is_active = models.BooleanField(default=True)
     
 
     class Meta:
-        verbose_name = "TripAssign"
-        verbose_name_plural ="TripAssigns"
+        verbose_name = "Trip Assign"
+        verbose_name_plural ="Trip Assigns"
 
     def __str__(self):
         return self.route_name.route_name
