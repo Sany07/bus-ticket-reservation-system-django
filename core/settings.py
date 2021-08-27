@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'trip_management.apps.TripManagementConfig',
     'fleet_management.apps.FleetManagementConfig',
     'ticket.apps.TicketConfig',
+    'mainsite.apps.MainsiteConfig',
 ]
 
 MIDDLEWARE = [

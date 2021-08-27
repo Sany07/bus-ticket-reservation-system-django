@@ -1,0 +1,262 @@
+{% load static %} 
+    <!-- SCRIPTS -->
+
+    <!-- ===============  JAVASCRIPT STARTS ================ -->
+<script src="https://www.shohoz.com/js/bootstrap.js"></script>
+<script src="https://www.shohoz.com/js/bootstrap-datepicker.js"></script>
+<script src="https://www.shohoz.com/js/jquery-ui.js"></script>
+<script src="https://www.shohoz.com/js/modernizr.custom.2.6.2.min.js"></script>
+<script src="https://www.shohoz.com/js/jquery.meanmenu.min.js"></script>
+
+<script>
+  $('nav.main-navigation').meanmenu({
+        meanScreenWidth: "992",
+        meanMenuContainer: '.mobile-menu'
+    });
+
+  </script>
+<style type="text/css">
+	#couponPopup{
+		z-index: 99999999;
+	}
+	#couponPopup .modal-dialog{
+		z-index:99999; 
+		margin-top: 10%; 
+		width:600px;
+		max-width: 100%;
+	}
+	#couponPopup .modal-content{
+		padding: 12px; 
+		border-radius:10px;
+	}
+	#couponPopup .modal-content button{
+        margin: -25px -25px 0 0;
+	    background: #f73131;
+	    border-radius: 25px;
+	    font-weight: bold;
+	    color: #fff;
+	}
+	#coupon-popup-home{
+		background: url("https://www.shohoz.com/img/coupon-popup/coupon-popup-home.png") no-repeat center #fff;
+		background-size: 100% auto;
+    	min-height: 333px;
+	}
+	#coupon-popup-search{
+		background: url("https://www.shohoz.com/img/coupon-popup/coupon-popup-search.png") no-repeat center #fff;
+		background-size: 100% auto;
+    	min-height: 333px;
+	}
+	#coupon-popup-trip{
+		background: url("https://www.shohoz.com/img/coupon-popup/coupon-popup-trip.png") no-repeat center #fff;
+		background-size: 100% auto;
+    	min-height: 333px;
+    	background-size:cover;
+	}
+	.coupon-popup-content h4{
+		margin: 207px 10px 0 0;
+	}
+	.coupon-popup-content h4 span{
+        padding: 10px 3px;
+	    border-radius: 5px;
+	    color: #222;
+	    font-size: 16px;
+	    font-weight: bold;
+	}
+	.coupon-popup-content h4 span.coupon-code{
+        padding: 3px 15px;
+	    border-radius: 5px;
+	    color: #c70000;
+	    font-weight: bold;
+	    font-size: 16px;
+	    margin-right: 120px;
+	    border: 2px dashed #f73131;
+	    font-family: sans-serif;
+	}
+
+	@media (max-width: 600px) {
+    	#coupon-popup-home, #coupon-popup-search, #coupon-popup-trip {
+	        background-size: 500px auto; /* Force the image to its minimum width */
+	    }
+	    .coupon-popup-content h4{
+			margin: 192px 10px 0 0;
+		}
+	    .coupon-popup-content h4 span.coupon-code{
+		    margin-right: 80px;
+		}
+	}
+	
+	@media (max-width: 500px) {
+    	#coupon-popup-home, #coupon-popup-search, #coupon-popup-trip {
+	        background-size: 420px auto; /* Force the image to its minimum width */
+	    }
+
+	    .coupon-popup-content h4{
+			margin: 180px 10px 0 0;
+		}
+
+		.coupon-popup-content h4 span{
+		    font-size: 12px;
+		}
+		.coupon-popup-content h4 span.coupon-code{
+			padding: 2px 11px;
+		    font-size: 12px;
+		    margin-right: 60px;
+		}
+	}
+	
+</style>
+
+<script>
+	/* Modal call */
+	function modalCall(heading, text, body) 
+	{
+	var html = '<div style="" class="modal fade bs-example-modal-sm" id="modalCall" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">'
+			+ '<div class="modal-dialog modal-sm">'
+			+ '<div class="modal-content" style="padding: 12px"><h3>' + heading + '</h3>'
+			+ '<h4 style="">' + text + '</h4>'
+			+ '<div class="clearfix">&nbsp;</div>'
+			+ '<div class="">' + body + '</div>'
+			+ '<div class="col-xs-12 text-right">'
+			+ '<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>'                    
+			+ '</div>'
+			+ '<br><br>'
+			+ '</div>'
+			+ '</div>'
+			+ '</div>';
+			$('body').prepend(html);
+			$('#modalCall').modal({'backdrop': 'static'});
+			$('#modalCall').addClass('animated bounce');
+			$('#modalCall').on('hidden.bs.modal', function(e) {
+	$('#modalCall').remove();
+	});
+	}
+
+	function couponPopup(flash_coupon_page) 
+	{
+        $.ajax({
+            type: "POST",
+            url: "/booking/bus/flash-coupon/",
+            data: { flash_coupon_page: flash_coupon_page },
+            complete: function(xhr, textStatus) {
+                //  popAlert(xhr.status);
+            }
+        }).done(function(data) {
+            //console.log(data);
+            //alert(data.flash_coupon)
+            if(data.coupon_code){
+            	$('.modal').modal('hide');
+            	var html = '<div class="modal fade bs-example-modal-sm" id="couponPopup" role="dialog" >'
+							+ '<div class="modal-dialog modal-sm">'
+							+ '<div id="coupon-popup-'+data.flash_coupon_page+'" class="modal-content coupon-popup-content">'
+							//+ '<div class="row text-right">'
+							+ '<button type="button" class="btn btn-sm pull-right" data-dismiss="modal">X</button>'                    
+							//+ '</div>'
+							+ '<h3> </h3>'
+							+ '<h4 class="round hollow pull-right"><span>Coupon: </span><span class="coupon-code">' + data.coupon_code + '</span></h4>'
+							+ '<div class="clearfix">&nbsp;</div>'
+							//+ '<div class="">' + body + '</div>'
+							+ '<br><br>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>';
+							$('body').prepend(html);
+							$('#couponPopup').modal({'backdrop': 'static'});
+							//$('#couponPopup').modal();
+							$('#couponPopup').addClass('animated bounce');
+							$('#couponPopup').on('hidden.bs.modal', function(e) {
+								$('#couponPopup').remove();
+							});
+            }
+        });
+	}
+</script>
+
+<div id="_js_esk_aud_tr" style="position:absolute;left:0;top:0;visibility:hidden"></div>
+<script type="text/javascript">
+    var __es_aud_id = 'gIS_SoyCs-vYtBe8D--5lGE0ZjAzMWVlMWE3MjA5OTc', __es_aud_redirect_uri = '';
+</script>
+<script type="text/javascript">
+    (function(uri){
+        var script = document.createElement('script');
+        script.src = uri + "?t=" + +(new Date());
+        document.head.appendChild(script);
+    })('//dsp.eskimi.com/assets/js/retr/tr.min.js');
+</script>
+<noscript>
+    <iframe src="//dsp-aud.eskimi.com/v1/audience_nos/gIS_SoyCs-vYtBe8D--5lGE0ZjAzMWVlMWE3MjA5OTc" width="0" height="0" frameborder="0" style="border: 0"></iframe>
+</noscript>
+<!-- End of Eskimi Code for Remarketing Tag --><script>
+    clevertap.notificationCallback = function(msg){
+        //raise the notification viewed and clicked events in the callback
+        clevertap.raiseNotificationViewed();
+        console.log(JSON.stringify(msg));//your custom rendering implementation here
+        console.log(msg.msgContent.html);
+        var htmldata = msg.msgContent.html;
+        var modal = document.getElementById("mod-body");
+        modal.innerHTML = htmldata;
+        $("#cleverTapModal").modal();
+    };
+
+    clevertap.notifications.push({
+        "titleText":'Would you like to receive Push Notifications?',
+        "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+        "okButtonText":'Sign me up!',
+        "rejectButtonText":'No thanks',
+        "askAgainTimeInSeconds":600,
+        "serviceWorkerPath": "https://www.shohoz.com/js/sw.js",
+        "okButtonColor":'#079d49'});
+</script>	<!--Start of Tawk.to Script-->
+
+<!--End of Tawk.to Script-->
+ 
+ 
+    <script type="text/javascript">
+        //alert('hello');
+        setTimeout(function(){
+            couponPopup('home');
+        },60000);
+        // jBar Script by Todd Motto
+        //  $('.downbar').delay(1000).fadeIn(300).addClass('up');
+        //  $('.jquery-bar').hide().delay(2500).slideDown(300);
+        //  $('.jquery-arrow').click(function () {
+        //      $('.downbar').toggleClass('up', 300);
+        //      $('.jquery-bar').slideToggle();
+        //  });
+        
+        // var userAgent = navigator.userAgent.toLowerCase();
+        // var isAndroid = userAgent.indexOf('android') > -1; //&& userAgent.indexOf('mobile');
+        
+        // if(isAndroid) {
+        //     alert('Please download our Android app!');
+        // }
+    </script>
+
+
+    <script>
+
+        var travel_destid;var travel_enddate;var travel_originid;var travel_startdate;
+
+        $('#bussearch').submit(function() {
+            travel_destid = $('#dest_to').val();
+            travel_enddate = $('#dor').val();
+            travel_originid = $('#dest_from').val();
+            travel_startdate = $('#doj').val();
+        });
+
+//        console.log(travel_destid);
+//        console.log(travel_enddate);
+//        console.log(travel_originid);
+//        console.log(travel_startdate);
+
+        gtag('event', 'page_view',
+        { 'send_to': 'AW-812588262',
+            'travel_destid': travel_destid,
+            'travel_enddate': travel_enddate,
+            'travel_originid': travel_originid,
+            'travel_pagetype': '/searchpage',
+            'travel_startdate': travel_startdate,
+            'travel_totalvalue': 'null'
+        });
+
+
+    </script>
